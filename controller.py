@@ -3,6 +3,7 @@ import flet as ft
 import model as md
 
 
+
 class SpellChecker:
 
     def __init__(self, view):
@@ -45,16 +46,25 @@ class SpellChecker:
             case _:
                 return None
 
-    def handleSpellCheck(self,e):
-        print(str(self._view.__testo.value))
-        print(str(self._view.__lingua.value))
-        print(str(self._view.__ricerca.value))
-        if self._view.__lingua.value() == None or self._view.__testo.value() == None or self._view.__ricerca.value() == None:
-            print("Invalid input")
-        else:
-           parole_trovate,tempo= self.handleSentence(self._view.__testo.value,self._view.__lingua.value,self._view.__ricerca.value)
-        return parole_trovate, tempo
+    def handleSpellCheck(self, e):
 
+        #print(str(self._view.__testo.value))
+        #print(str(self._view.__lingua.value))
+        #print(str(self._view.__ricerca.value))
+
+        self._view.lvOut.controls.clear()
+        self._view.update()
+
+        if self._view._lingua.value == None or self._view._testo.value == "" or self._view._ricerca.value == None:
+            self._view.lvOut.controls.append(ft.Text("Invalid input"))  # invalid input
+            self._view.update()
+        else:
+            parole_trovate, tempo = self.handleSentence(self._view._testo.value, self._view._lingua.value, self._view._ricerca.value)
+            for parola in parole_trovate:
+                self._view.lvOut.controls.append(ft.Text(parola))
+            self._view.lvOut.controls.append(ft.Text(f"Tempo impiegato: {tempo}"))
+            self._view.update()
+            # return non serve perche' faccio tutto da lvOut
     def printMenu(self):
         print("______________________________\n" +
               "      SpellChecker 101\n" +
@@ -65,7 +75,6 @@ class SpellChecker:
               "3. Spagnolo\n" +
               "4. Exit\n" +
               "______________________________\n")
-
 
 
 def replaceChars(text):
