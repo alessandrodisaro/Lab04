@@ -2,6 +2,7 @@ import time
 import flet as ft
 import model as md
 
+
 class SpellChecker:
 
     def __init__(self, view):
@@ -44,10 +45,19 @@ class SpellChecker:
             case _:
                 return None
 
+    def handleSpellCheck(self,e):
+        print(str(self._view.__testo.value))
+        print(str(self._view.__lingua.value))
+        print(str(self._view.__ricerca.value))
+        if self._view.__lingua.value() == None or self._view.__testo.value() == None or self._view.__ricerca.value() == None:
+            print("Invalid input")
+        else:
+           parole_trovate,tempo= self.handleSentence(self._view.__testo.value,self._view.__lingua.value,self._view.__ricerca.value)
+        return parole_trovate, tempo
 
     def printMenu(self):
         print("______________________________\n" +
-              "      SpellChecker 101\n"+
+              "      SpellChecker 101\n" +
               "______________________________\n " +
               "Seleziona la lingua desiderata\n"
               "1. Italiano\n" +
@@ -55,6 +65,7 @@ class SpellChecker:
               "3. Spagnolo\n" +
               "4. Exit\n" +
               "______________________________\n")
+
 
 
 def replaceChars(text):

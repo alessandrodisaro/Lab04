@@ -1,5 +1,8 @@
 import flet as ft
 
+import controller
+
+
 class View(object):
     def __init__(self, page: ft.Page):
         # Page
@@ -27,15 +30,45 @@ class View(object):
         )
 
         # Add your stuff here
+        self.__lingua = ft.Dropdown(
+            label="Select a languaage",
+            width=300,
+            options=[
+                ft.dropdown.Option("Italiano"),
+                ft.dropdown.Option("English"),
+                ft.dropdown.Option("Espanol")
+            ]
+        )
 
-        self.page.add([])
+        self.__ricerca= ft.Dropdown(
+            label="Search mode",
+            width=300,
+            options=[
+                ft.dropdown.Option("Default"),
+                ft.dropdown.Option("Linear"),
+                ft.dropdown.Option("Dichotomic")
+            ]
+        )
+
+        self.__testo=ft.TextField(label="Add your text here")
+
+
+        self.__button = ft.ElevatedButton(text="Submit", on_click=controller.SpellChecker.handleSpellCheck)
+
+        row1 = ft.Row([self.__lingua])
+        row2 = ft.Row([self.__ricerca, self.__testo, self.__button])  # che sono il campo della tipo di ricerca, campo di inserimento testo e il bottone
+        row3 = ft.Row([])
+
+        self.page.add(row1, row2, row3)
 
         self.page.update()
 
     def update(self):
         self.page.update()
+
     def setController(self, controller):
         self.__controller = controller
+
     def theme_changed(self, e):
         """Function that changes the color theme of the app, when the corresponding
         switch is triggered"""
